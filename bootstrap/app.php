@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,7 +22,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(SetUserLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        
         $exceptions->renderable(function (AuthorizationException $e) {
             return response()->json([
                 'message' => __('messages.forbidden'),
@@ -45,5 +45,11 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'message' => __('messages.model_not_found'),
             ], 404);
+        });
+
+        $exceptions->renderable(function (TokenExpiredException $e) {
+            return response()->json([
+                'message' => __('messages.token_expired'),
+            ], 403);
         });
     })->create();

@@ -66,9 +66,17 @@ class ProductController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $product = Product::findOrFail($id);
+
+        $productData = $product->toArray(); 
+
         $product->delete();
-        return response()->json(null, 204);
+
+        return response()->json([
+            'message' => __('messages.product_deleted_successfully'),
+            'product' => $productData,
+        ], 200);
     }
+
 
     public function prices(int $id): JsonResponse
     {
