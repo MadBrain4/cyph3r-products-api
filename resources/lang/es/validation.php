@@ -29,23 +29,24 @@ return [
     ],
 
     'product' => [
-        'name' => [
-            'required' => 'El nombre del producto es obligatorio.',
-        ],
-        'price' => [
-            'required' => 'El precio es obligatorio.',
-        ],
-        'currency_id' => [
-            'required' => 'La divisa es obligatoria.',
-            'exists' => 'La divisa seleccionada no existe.',
-        ],
-        'tax_cost' => [
-            'required' => 'El costo de impuestos es obligatorio.',
-        ],
-        'manufacturing_cost' => [
-            'required' => 'El costo de fabricación es obligatorio.',
-        ],
+        'name_required'               => 'El campo nombre es obligatorio.',
+        'name_string'                 => 'El nombre debe ser una cadena de texto.',
+        'name_max'                    => 'El nombre no debe exceder los 255 caracteres.',
+        'description_string'          => 'La descripción debe ser una cadena de texto.',
+        'price_required'              => 'El precio es obligatorio.',
+        'price_numeric'               => 'El precio debe ser un número.',
+        'price_min'                   => 'El precio debe ser al menos 0.',
+        'currency_required'           => 'La divisa es obligatoria.',
+        'currency_exists'             => 'La divisa seleccionada no es válida.',
+        'tax_required'                => 'El costo de impuestos es obligatorio.',
+        'tax_numeric'                 => 'El costo de impuestos debe ser numérico.',
+        'tax_min'                     => 'El costo de impuestos debe ser al menos 0.',
+        'manufacturing_required'      => 'El costo de fabricación es obligatorio.',
+        'manufacturing_numeric'       => 'El costo de fabricación debe ser un número.',
+        'manufacturing_min'           => 'El costo de fabricación debe ser al menos 0.',
+        'manufacturing_lt_price'      => 'El costo de fabricación debe ser menor al precio del producto.',
     ],
+
 
     'attributes' => [
         'name'                  => 'nombre',

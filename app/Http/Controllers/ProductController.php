@@ -7,27 +7,47 @@ use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
-    use AuthorizesRequests;
-
-    public function __construct()
+    public function index(Request $request): JsonResponse
     {
-        $this->authorizeResource(Product::class, 'product');
-    }
+        $query = Product::with('currency');
 
-    public function index(): JsonResponse
-    {
-        $products = Product::with('currency')->get();
+        // Filtros por query (name, description)
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        // Ordenamiento dinámico
+        $sortBy = $request->get('sort_by', 'id');
+        $sortOrder = $request->get('sort_order', 'asc');
+
+        $allowedSorts = ['id', 'name', 'price', 'tax_cost', 'manufacturing_cost'];
+        if (in_array($sortBy, $allowedSorts)) {
+            $query->orderBy($sortBy, $sortOrder);
+        }
+
+        // Paginación
+        $perPage = $request->get('per_page', 10);
+        $products = $query->paginate($perPage);
+
         return response()->json($products);
     }
 
     public function store(StoreProductRequest $request): JsonResponse
     {
         $product = Product::create($request->validated());
-        return response()->json($product, 201);
+
+        return response()->json([
+            'message' => __('messages.product_created_successfully'),
+            'product' => $product,
+        ], 201);
     }
 
     public function show(int $id): JsonResponse

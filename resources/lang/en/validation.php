@@ -29,23 +29,24 @@ return [
     ],
 
     'product' => [
-        'name' => [
-            'required' => 'The product name is required.',
-        ],
-        'price' => [
-            'required' => 'The price is required.',
-        ],
-        'currency_id' => [
-            'required' => 'The currency is required.',
-            'exists' => 'The selected currency does not exist.',
-        ],
-        'tax_cost' => [
-            'required' => 'The tax cost is required.',
-        ],
-        'manufacturing_cost' => [
-            'required' => 'The manufacturing cost is required.',
-        ],
+        'name_required'               => 'The name field is required.',
+        'name_string'                 => 'The name must be a string.',
+        'name_max'                    => 'The name may not be greater than 255 characters.',
+        'description_string'          => 'The description must be a string.',
+        'price_required'              => 'The price field is required.',
+        'price_numeric'               => 'The price must be a number.',
+        'price_min'                   => 'The price must be at least 0.',
+        'currency_required'           => 'The currency is required.',
+        'currency_exists'             => 'The selected currency is invalid.',
+        'tax_required'                => 'The tax cost is required.',
+        'tax_numeric'                 => 'The tax cost must be a number.',
+        'tax_min'                     => 'The tax cost must be at least 0.',
+        'manufacturing_required'      => 'The manufacturing cost is required.',
+        'manufacturing_numeric'       => 'The manufacturing cost must be a number.',
+        'manufacturing_min'           => 'The manufacturing cost must be at least 0.',
+        'manufacturing_lt_price'      => 'The manufacturing cost must be less than the product price.',
     ],
+
 
     'attributes' => [
         'name'                  => 'name',

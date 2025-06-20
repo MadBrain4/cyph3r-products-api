@@ -23,6 +23,8 @@ class UserLanguageController extends Controller
         $user->language = $request->input('language');
         $user->save();
 
+        app()->setLocale($user->language);
+
         return response()->json([
             'message' => __('messages.language_updated'),
             'language' => $user->language,

@@ -5,7 +5,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(SetUserLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        
         $exceptions->renderable(function (AuthorizationException $e) {
             return response()->json([
                 'message' => __('messages.forbidden'),
@@ -26,7 +30,20 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->renderable(function (AccessDeniedHttpException $e) {
             return response()->json([
-                'message' => __('messages.forbidden'), // o texto directo como 'No tienes permiso...'
+                'message' => __('messages.forbidden'), 
             ], 403);
+        });
+        
+
+        $exceptions->renderable(function (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => __('messages.model_not_found'),
+            ], 404);
+        });
+
+        $exceptions->renderable(function (NotFoundHttpException  $e) {
+            return response()->json([
+                'message' => __('messages.model_not_found'),
+            ], 404);
         });
     })->create();

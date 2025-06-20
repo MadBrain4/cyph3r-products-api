@@ -15,8 +15,10 @@ Route::middleware([SetUserLocale::class, AuthApiMiddleware::class])->group(funct
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
 
-    Route::get('/user/language', [UserLanguageController::class, 'getLanguage']);
-    Route::put('/user/language', [UserLanguageController::class, 'updateLanguage']);
+    Route::prefix('user')->group(function () {
+        Route::get('language', [UserLanguageController::class, 'getLanguage']);
+        Route::put('language', [UserLanguageController::class, 'updateLanguage']);
+    });
 
      Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'index']);         
