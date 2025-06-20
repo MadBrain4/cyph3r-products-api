@@ -20,10 +20,14 @@ class ProductPriceSeeder extends Seeder
 
         foreach ($products as $product) {
             foreach ($currencies->where('id', '!=', $product->currency_id) as $currency) {
-                ProductPrice::factory()->create([
-                    'product_id' => $product->id,
-                    'currency_id' => $currency->id,
-                ]);
+                // Decidir aleatoriamente si agregar o no el precio para esta moneda
+                if (rand(0, 100) < 80) { // 80% de probabilidad de crear precio (ajusta al gusto)
+                    ProductPrice::factory()->create([
+                        'product_id' => $product->id,
+                        'currency_id' => $currency->id,
+                    ]);
+                }
+                // El 20% restante no crea precio para dejar vacíos y permitir pruebas
             }
         }
     }

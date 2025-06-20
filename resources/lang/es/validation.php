@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'validation_failed' => 'La validación falló. Por favor, revisa los datos ingresados.',
 
     'auth' => [
 
@@ -28,6 +29,10 @@ return [
 
     ],
 
+    'price' => [
+        'added' => 'Precio agregado correctamente.',
+    ],
+
     'product' => [
         'name_required'               => 'El campo nombre es obligatorio.',
         'name_string'                 => 'El nombre debe ser una cadena de texto.',
@@ -45,6 +50,7 @@ return [
         'manufacturing_numeric'       => 'El costo de fabricación debe ser un número.',
         'manufacturing_min'           => 'El costo de fabricación debe ser al menos 0.',
         'manufacturing_lt_price'      => 'El costo de fabricación debe ser menor al precio del producto.',
+        'duplicate_currency_price' => 'Ya existe un precio para esta moneda en este producto.',
     ],
 
 
@@ -53,6 +59,8 @@ return [
         'email'                 => 'correo electrónico',
         'password'              => 'contraseña',
         'password_confirmation' => 'confirmación de contraseña',
+        'currency_id' => 'moneda',
+        'price' => 'precio',
     ],
 
 ];

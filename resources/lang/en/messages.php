@@ -8,4 +8,5 @@
         'model_not_found' => 'The requested resource was not found.',
         'product_deleted_successfully' => 'Product deleted successfully.',
         'token_expired' => 'The token has expired.',
+        'price_added_successfully' => 'Price added successfully to the product.',
     ];

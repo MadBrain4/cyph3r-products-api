@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\AddPriceRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Http\Resources\ProductPriceResource;
+use App\Http\Resources\ProductPricesResource;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -78,23 +81,26 @@ class ProductController extends Controller
     }
 
 
-    public function prices(int $id): JsonResponse
+    public function prices(int $id): ProductPricesResource
     {
-        $product = Product::findOrFail($id);
-        $prices = $product->prices()->with('currency')->get();
-        return response()->json($prices);
+        $product = Product::with('prices.currency')->findOrFail($id);
+        return new ProductPricesResource($product);
     }
 
-    public function addPrice(Request $request, int $id): JsonResponse
+    public function addPrice(AddPriceRequest $request, int $id): JsonResponse
     {
         $product = Product::findOrFail($id);
 
-        $validated = $request->validate([
-            'currency_id' => 'required|exists:currencies,id',
-            'price' => 'required|numeric|min:0',
-        ]);
+        $validated = $request->validated();
 
         $price = $product->prices()->create($validated);
-        return response()->json($price, 201);
+
+        $price = $product->prices()->create($validated);
+        $price->load('currency');
+
+        return response()->json([
+            'message' => __('messages.price_added_successfully'),
+            'price' => new ProductPriceResource($price),
+        ], 201);
     }
 }

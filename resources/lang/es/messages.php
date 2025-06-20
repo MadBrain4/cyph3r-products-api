@@ -8,4 +8,5 @@
         'model_not_found' => 'El recurso solicitado no fue encontrado.',
         'product_deleted_successfully' => 'Producto eliminado con éxito.',
         'token_expired' => 'El token ha expirado.',
+        'price_added_successfully' => 'Precio agregado correctamente al producto.',
     ];
