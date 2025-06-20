@@ -13,7 +13,7 @@
 ⚙️ Instalación
 
     1. 📥 Clona el repositorio:
-        git clone git@github.com:MadBrain4/latinad-api.git
+        git clone git@github.com:MadBrain4/cyph3r-products-api.git
         cd latinad-api
 
     2. 📦 Instala dependencias:
